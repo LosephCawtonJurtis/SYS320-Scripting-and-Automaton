@@ -17,7 +17,6 @@ pFile="${the_client}-wg0.conf"
 # Check if the peer file exists
 if [[ -f "${pFile}" ]]
 then
-	echo "shits wack bruh"
 	# Prompt if we need to overwrite the file
 	echo "The file ${pFile} exists."
 	echo -n "do you want to overwrite it [y|N]"
