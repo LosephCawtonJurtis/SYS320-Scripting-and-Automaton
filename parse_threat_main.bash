@@ -20,6 +20,8 @@ then
 	if [[ $choice == "Y" || $choice == "y" ]]
 	then
 		wget https://rules.emergingthreats.net/blockrules/emerging-drop.suricata.rules -O /tmp/emerging-drop.suricata.rules
+	else
+		wget https://rules.emergingthreats.net/blockrules/emerging-drop.suricata.rules -O /tmp/emerging-drop.suricata.rules
 	fi
 
 fi
@@ -32,13 +34,16 @@ then
         if [[ $choice == "Y" || $choice == "y" ]]
         then
                 wget https://raw.githubusercontent.com/botherder/targetedthreats/master/targetedthreats.csv -O /tmp/targetedthreats.csv
-        fi
+	else
+		wget https://raw.githubusercontent.com/botherder/targetedthreats/master/targetedthreats.csv -O /tmp/targetedthreats.csv
+		# if the person says yes, it will be overwritten with a newer version, if the file does not exist it will be downloaded,this else won't trigger if the file is already there and that goes for the first check as well
+	fi
 
 fi
 
-grep "domain" /tmp/targetedthreats.csv | cut -d, f2 | tee -a badDomains.txt
+grep "domain" /tmp/targetedthreats.csv | cut -d, -f2 | tee -a badDomains.txt
 
-while getopts ':icmnwhp:' OPTION; do
+while getopts ':icmnwhp' OPTION; do
 
 	case "$OPTION" in
 	
@@ -75,12 +80,12 @@ while getopts ':icmnwhp:' OPTION; do
 
 			done
 		;;
-		h) echo "Usage: $(basename $0) [-i/c/m/n/w/h]"
+		h) echo "Usage: $(basename $0) [-i/c/m/n/w/h/p]" #all better, thanks
 		;;
 		p)
 			#grep "domain" targetedthreats.csv | cut -d, f2
 			
-			echo "class-map match-any BAD_URLS" | tee -a badDomainsCisco.txt
+			echo "class-map match-any BAD_URLS" > badDomainsCisco.txt
 
 			for eachDomain in $(cat badDomains.txt)
 			do
@@ -100,4 +105,5 @@ done
 #	echo "iptables -A INPUT -s ${eachIP} -j DROP" | tee -a badIPs.iptables
 
 #done
+#WHAT'S UP
 
