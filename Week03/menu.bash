@@ -136,7 +136,6 @@ function security_menu() {
 	echo "[C]heck user UIDs"
 	echo "[S]ee last 10 logged in users"
 	echo "[A]quire currently logged in users"
-	echo "[W]owie it gets difficult"
 	echo "[E]xit"
 	echo ""
 	read -p "please enter an option" choice
@@ -151,8 +150,6 @@ function security_menu() {
 		S|s) lastlog |tail |less
 		;;
 		A|a) users |less
-		;;
-		W|w) echo "to continue to come up with words that start with a letter you haven't already used for an option" |less
 		;;
 		E|e)	exit 0
 		;;
